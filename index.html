@@ -2,692 +2,141 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Netflix Brasil - Assista a séries, filmes e documentários</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinição de Senha - Empresa Corp</title>
     <style>
+        /* Reset básico */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* CUSTOM SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #222;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #e50914;
-            border-radius: 4px;
-        }
-
-        /* HEADER FIXO */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 100%);
-            padding: 20px 60px;
+            background-color: #f0f4f8; /* Cor de fundo cinza/azulado claro */
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(3px);
-        }
-
-        .logo {
-            font-size: 32px;
-            font-weight: 900;
-            color: #e50914;
-            letter-spacing: -1px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #e5e5e5;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #fff;
-        }
-
-        .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 4px;
-            background-color: #e50914;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* HERO SECTION */
-        .hero {
-            height: 85vh;
-            background: linear-gradient(77deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 100%), url('https://assets.nflxext.com/ffe/siteui/vlv3/1ef6d1b9-8897-45cf-a6f1-fe5131d5d41a/6f8d8f69-0e8b-4261-bc92-0283e6b99485/BR-pt-20250210-trifecta-perspective_alpha_website_large.jpg');
-            background-size: cover;
-            background-position: center 30%;
-            display: flex;
-            align-items: center;
-            padding: 0 60px;
-            margin-bottom: 30px;
-        }
-
-        .hero-content {
-            max-width: 650px;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .hero-content h1 {
-            font-size: 64px;
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-
-        .hero-content h2 {
-            font-size: 26px;
-            font-weight: 400;
-            margin-bottom: 25px;
-        }
-
-        .hero-content p {
-            font-size: 19px;
-            margin-bottom: 20px;
-        }
-
-        .email-signup {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .email-signup input {
-            flex: 1;
-            padding: 18px 16px;
-            font-size: 16px;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            border-radius: 4px;
-            outline: none;
-        }
-
-        .email-signup input:focus {
-            border-color: #e50914;
-        }
-
-        .btn-primary {
-            background: #e50914;
-            border: none;
-            color: white;
-            padding: 12px 32px;
-            font-size: 24px;
-            font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.2s;
-            white-space: nowrap;
-        }
-
-        .btn-primary:hover {
-            background: #f40612;
-        }
-
-        /* SEÇÕES DE CONTEÚDO */
-        .section {
-            padding: 40px 60px;
-            background: #000;
-        }
-
-        .row-header {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-        }
-
-        .row {
-            position: relative;
-            margin-bottom: 50px;
-        }
-
-        .row-posters {
-            display: flex;
-            overflow-y: hidden;
-            overflow-x: scroll;
-            gap: 12px;
-            scroll-behavior: smooth;
-            padding-bottom: 20px;
-        }
-
-        .row-posters::-webkit-scrollbar {
-            display: none;
-        }
-
-        .poster {
-            flex: 0 0 auto;
-            width: 200px;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .poster img {
-            width: 100%;
-            border-radius: 6px;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .poster:hover {
-            transform: scale(1.05);
-            z-index: 2;
-        }
-
-        .poster:hover img {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-        }
-
-        /* FAQ SECTION */
-        .faq-section {
-            background: #000;
-            padding: 60px 60px;
-            border-top: 8px solid #222;
-            border-bottom: 8px solid #222;
-        }
-
-        .faq-title {
-            font-size: 48px;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .faq-item {
-            max-width: 800px;
-            margin: 0 auto 10px;
-            background: #2d2d2d;
-        }
-
-        .faq-question {
-            background: #2d2d2d;
-            padding: 20px 24px;
-            font-size: 24px;
-            font-weight: 400;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s;
-        }
-
-        .faq-question:hover {
-            background: #3d3d3d;
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            background: #2d2d2d;
-            padding: 0 24px;
-            font-size: 18px;
-            line-height: 1.5;
-            color: #ddd;
-            border-top: 1px solid #000;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 24px;
-        }
-
-        .plus-icon {
-            font-size: 36px;
-            font-weight: 300;
-        }
-
-        /* FOOTER */
-        .footer {
-            background: #000;
-            padding: 50px 60px 40px;
-            color: #757575;
-            font-size: 14px;
-        }
-
-        .footer a {
-            color: #757575;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .footer-grid ul {
-            list-style: none;
-        }
-
-        .footer-grid li {
-            margin-bottom: 16px;
-        }
-
-        /* MODAL DE LOGIN */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
         }
 
-        .modal-content {
-            background: #000;
-            max-width: 450px;
-            width: 90%;
+        .login-card {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 420px;
             padding: 40px;
             border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             text-align: center;
-            border: 1px solid #333;
         }
 
-        .modal-content h2 {
+        /* Ícone/Logo azul no topo */
+        .logo-icon {
+            width: 54px;
+            height: 54px;
+            background: linear-gradient(180deg, #1882ff 0%, #0060d5 100%);
+            border-radius: 12px;
+            margin: 0 auto 20px;
+        }
+
+        .header-text {
+            font-size: 13px;
+            color: #2c3e50;
+            font-weight: 600;
             margin-bottom: 20px;
         }
 
-        .modal-content input {
-            width: 100%;
-            padding: 16px;
-            margin: 10px 0;
-            background: #333;
-            border: none;
-            color: white;
-            border-radius: 4px;
+        .title {
+            font-size: 18px;
+            color: #1a1f36;
+            margin-bottom: 8px;
         }
 
-        .modal-content button {
+        .subtitle {
+            font-size: 13px;
+            color: #697386;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            padding: 0 10px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e0e6eb;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input::placeholder {
+            color: #8f9bb3;
+        }
+
+        .form-group input:focus {
+            border-color: #0056b3;
+        }
+
+        .submit-btn {
             width: 100%;
             padding: 14px;
-            background: #e50914;
+            background-color: #005bb5;
             color: white;
             border: none;
-            font-weight: bold;
-            margin-top: 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.2s;
         }
 
-        .close-modal {
-            float: right;
-            font-size: 28px;
-            cursor: pointer;
-            margin-top: -20px;
+        .submit-btn:hover {
+            background-color: #004a94;
         }
 
-        /* RESPONSIVO */
-        @media (max-width: 768px) {
-            .header {
-                padding: 15px 20px;
-            }
-            .hero {
-                padding: 0 20px;
-                height: 70vh;
-            }
-            .hero-content h1 {
-                font-size: 36px;
-            }
-            .hero-content h2 {
-                font-size: 20px;
-            }
-            .email-signup {
-                flex-direction: column;
-            }
-            .btn-primary {
-                font-size: 18px;
-                padding: 12px;
-                text-align: center;
-            }
-            .section, .faq-section {
-                padding: 30px 20px;
-            }
-            .row-header {
-                font-size: 22px;
-            }
-            .poster {
-                width: 130px;
-            }
-            .faq-title {
-                font-size: 32px;
-            }
-            .faq-question {
-                font-size: 18px;
-                padding: 15px 20px;
-            }
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .toast-msg {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #e50914;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-weight: bold;
-            z-index: 3000;
-            display: none;
-            animation: fadeUp 0.3s;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; bottom: 0; }
-            to { opacity: 1; bottom: 30px; }
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            color: #a0aec0;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">NETFLIX</div>
-        <div class="nav-links">
-            <a href="#" id="openLoginBtn">Entrar</a>
-            <div class="avatar">U</div>
-        </div>
-    </div>
-
-    <!-- HERO PRINCIPAL -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1>Filmes, séries e muito mais. Sem limites.</h1>
-            <h2>Assista onde quiser. Cancele quando quiser.</h2>
-            <p>Pronto para assistir? Informe seu email para criar ou reiniciar sua assinatura.</p>
-            <div class="email-signup">
-                <input type="email" id="heroEmail" placeholder="Email">
-                <button class="btn-primary" id="heroBtn">Vamos lá  ></button>
+    <div class="login-card">
+        <div class="logo-icon"></div>
+        
+        <div class="header-text">Empresa Corp &middot; Portal de TI</div>
+        
+        <h1 class="title">Redefinição de Senha Corporativa</h1>
+        <p class="subtitle">Sua senha expirou. Confirme sua identidade para<br>continuar.</p>
+        
+        <form action="#" method="POST">
+            <div class="form-group">
+                <input type="text" placeholder="Usuário (login corporativo)" required>
             </div>
-        </div>
-    </div>
-
-    <!-- SEÇÃO DE FILMES (CARROSSEL) -->
-    <div class="section">
-        <div class="row">
-            <h2 class="row-header">Mais populares</h2>
-            <div class="row-posters" id="rowPopular">
-                <!-- imagens via JS ou fixas? vamos colocar dinâmico com links reais -->
+            <div class="form-group">
+                <input type="password" placeholder="Senha atual" required>
             </div>
-        </div>
-        <div class="row">
-            <h2 class="row-header">Séries em alta</h2>
-            <div class="row-posters" id="rowSeries"></div>
-        </div>
-        <div class="row">
-            <h2 class="row-header">Originais Netflix</h2>
-            <div class="row-posters" id="rowOriginals"></div>
-        </div>
-    </div>
-
-    <!-- FAQ INTERATIVO -->
-    <div class="faq-section">
-        <h2 class="faq-title">Perguntas frequentes</h2>
-        <div class="faq-item">
-            <div class="faq-question">O que é a Netflix? <span class="plus-icon">+</span></div>
-            <div class="faq-answer">A Netflix é um serviço de streaming que oferece uma ampla variedade de séries, filmes e documentários premiados em milhares de aparelhos conectados à internet.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">Quanto custa a Netflix? <span class="plus-icon">+</span></div>
-            <div class="faq-answer">Assista à Netflix no seu celular, tablet, smart TV, laptop ou aparelho de streaming por uma taxa mensal fixa. Planos a partir de R$20,90.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">Onde posso assistir? <span class="plus-icon">+</span></div>
-            <div class="faq-answer">Assista onde quiser, quando quiser. Faça login com sua conta Netflix para assistir instantaneamente pela web ou no app.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-question">Como faço para cancelar? <span class="plus-icon">+</span></div>
-            <div class="faq-answer">A Netflix é flexível. Sem contratos ou compromissos. Você pode cancelar facilmente sua conta online com dois cliques.</div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-        <div style="max-width:1000px; margin:0 auto;">
-            <p>Dúvidas? Ligue 0800 761 4631</p>
-            <div class="footer-grid">
-                <ul>
-                    <li><a href="#">Perguntas frequentes</a></li>
-                    <li><a href="#">Relações com investidores</a></li>
-                    <li><a href="#">Formas de assistir</a></li>
-                </ul>
-                <ul>
-                    <li><a href="#">Centro de ajuda</a></li>
-                    <li><a href="#">Carreiras</a></li>
-                    <li><a href="#">Termos de uso</a></li>
-                </ul>
-                <ul>
-                    <li><a href="#">Conta</a></li>
-                    <li><a href="#">Resgatar cartão pré-pago</a></li>
-                    <li><a href="#">Privacidade</a></li>
-                </ul>
-                <ul>
-                    <li><a href="#">Imprensa</a></li>
-                    <li><a href="#">Comprar cartão pré-pago</a></li>
-                    <li><a href="#">Preferências de cookies</a></li>
-                </ul>
+            <div class="form-group">
+                <input type="password" placeholder="Nova senha" required>
             </div>
-            <p style="margin-top:30px;">© 2025 Netflix Brasil</p>
+            
+            <button type="submit" class="submit-btn">Redefinir Senha Agora</button>
+        </form>
+        
+        <div class="footer">
+            &copy; 2026 Empresa Corp. Todos os direitos reservados.
         </div>
     </div>
 
-    <!-- MODAL LOGIN -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModalBtn">&times;</span>
-            <h2>Entrar na Netflix</h2>
-            <form id="loginFormModal">
-                <input type="email" id="modalEmail" placeholder="Email ou número de telefone" required>
-                <input type="password" id="modalPassword" placeholder="Senha" required>
-                <button type="submit">Entrar</button>
-            </form>
-            <p style="margin-top:20px; font-size:12px;">Ao continuar, você concorda com nossos Termos de Uso.</p>
-        </div>
-    </div>
-
-    <div id="toastMsg" class="toast-msg"></div>
-
-    <script>
-        // BASE DE IMAGENS USANDO POSTERS VÁLIDOS via The Movie Database (TMDB) - URLs públicas e genéricas
-        // Seleção de filmes reais e séries com imagens de alta qualidade (disponíveis via image.tmdb)
-        const popularMovies = [
-            { title: "Deadpool & Wolverine", img: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6jM3Z8hw.jpg" },
-            { title: "Oppenheimer", img: "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" },
-            { title: "Duna: Parte 2", img: "https://image.tmdb.org/t/p/w500/8b8R8l88Qje9dn9OE8PY05Nxl1X.jpg" },
-            { title: "Divertida Mente 2", img: "https://image.tmdb.org/t/p/w500/oxxqiyWrnM0XPnBtM9EiNOgHcUx.jpg" },
-            { title: "John Wick 4", img: "https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg" },
-            { title: "Top Gun: Maverick", img: "https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1DX17ljH.jpg" }
-        ];
-
-        const topSeries = [
-            { title: "Round 6", img: "https://image.tmdb.org/t/p/w500/4dClcUVZPcM52G1bWQ8uNhCpnhh.jpg" },
-            { title: "Stranger Things", img: "https://image.tmdb.org/t/p/w500/49WJfeNqOBM8Yk6eK23DdMti2x2.jpg" },
-            { title: "The Last of Us", img: "https://image.tmdb.org/t/p/w500/uKvVjHNhcB2VMVGTHRwBnVTst9R.jpg" },
-            { title: "The Witcher", img: "https://image.tmdb.org/t/p/w500/7vjaCdMw15BcLhR2OEdUyATi7gb.jpg" },
-            { title: "Casa do Dragão", img: "https://image.tmdb.org/t/p/w500/sQxems54JcMfz0bL1NiLBWUuW7j.jpg" }
-        ];
-
-        const originals = [
-            { title: "Nobody Wants This", img: "https://image.tmdb.org/t/p/w500/v9nGSRx5aF8tDgTX85WCR0kztLm.jpg" },
-            { title: "O Justiceiro", img: "https://image.tmdb.org/t/p/w500/pVlXeWP5CQvVHUcHCv6rvvDIuDu.jpg" },
-            { title: "Emily em Paris", img: "https://image.tmdb.org/t/p/w500/84dX5G3L2HhqGdaFVX8TpH0Nve7.jpg" },
-            { title: "Bridgerton", img: "https://image.tmdb.org/t/p/w500/xi2L9cGXh80OdhQoGb2VYMV7Moj.jpg" }
-        ];
-
-        function populateRow(containerId, items) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            container.innerHTML = '';
-            items.forEach(item => {
-                const posterDiv = document.createElement('div');
-                posterDiv.className = 'poster';
-                posterDiv.innerHTML = `<img src="${item.img}" alt="${item.title}" title="${item.title}" loading="lazy">`;
-                posterDiv.addEventListener('click', () => {
-                    showToast(`🎬 ${item.title} - Em breve na sua lista!`);
-                });
-                container.appendChild(posterDiv);
-            });
-        }
-
-        populateRow('rowPopular', popularMovies);
-        populateRow('rowSeries', topSeries);
-        populateRow('rowOriginals', originals);
-
-        // FAQ ACORDEON
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            question.addEventListener('click', () => {
-                item.classList.toggle('active');
-                const icon = question.querySelector('.plus-icon');
-                if(item.classList.contains('active')) {
-                    icon.textContent = '×';
-                } else {
-                    icon.textContent = '+';
-                }
-            });
-        });
-
-        // MODAL LOGIN
-        const modal = document.getElementById('loginModal');
-        const openLoginBtn = document.getElementById('openLoginBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const loginFormModal = document.getElementById('loginFormModal');
-
-        openLoginBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.style.display = 'flex';
-        });
-
-        closeModalBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        loginFormModal.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('modalEmail').value;
-            const pass = document.getElementById('modalPassword').value;
-            if(email && pass) {
-                showToast(`Bem-vindo de volta, ${email.split('@')[0]}! Redirecionando...`);
-                modal.style.display = 'none';
-                // simular redirect bem-sucedido
-                setTimeout(() => {
-                    showToast("🎉 Login efetuado! Explore os conteúdos.");
-                }, 800);
-                document.getElementById('modalEmail').value = '';
-                document.getElementById('modalPassword').value = '';
-            } else {
-                showToast("Por favor, preencha email e senha.", true);
-            }
-        });
-
-        // HERO BUTTON (email)
-        const heroBtn = document.getElementById('heroBtn');
-        const heroEmail = document.getElementById('heroEmail');
-
-        heroBtn.addEventListener('click', () => {
-            const email = heroEmail.value.trim();
-            if(email && email.includes('@')) {
-                showToast(`Ótimo! Enviamos um link para ${email}. Comece sua jornada Netflix.`);
-                heroEmail.value = '';
-            } else {
-                showToast("Digite um email válido para continuar.", true);
-            }
-        });
-
-        // Toast System
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toastMsg');
-            toast.textContent = message;
-            toast.style.backgroundColor = isError ? '#b20710' : '#e50914';
-            toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 3000);
-        }
-
-        // Scrolling dinamico com efeito suave nos headers (pequeno detalhe)
-        // Header background ao rolar
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 50) {
-                header.style.background = '#0a0a0a';
-                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.7)';
-            } else {
-                header.style.background = 'linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 100%)';
-                header.style.boxShadow = 'none';
-            }
-        });
-
-        // interação extra: animação de hover nos posters já presente
-        console.log("Netflix Experience Carregada");
-    </script>
 </body>
 </html>
